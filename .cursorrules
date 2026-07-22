@@ -1,0 +1,19 @@
+# Capstone Project — Cursor Rules
+
+## Stack
+
+- **Runtime:** Node.js (LTS, v18+)
+- **Package manager:** npm
+- **Language:** JavaScript (CommonJS or ES modules as configured in package.json)
+
+## Conventions
+
+- **Commits:** Use [Conventional Commits](https://www.conventionalcommits.org/) format (e.g. `feat:`, `fix:`, `docs:`, `chore:`).
+- **Indentation:** 2 spaces — no tabs.
+- **Dependencies:** Ask before adding new npm packages. Prefer built-in Node.js APIs and existing dependencies when possible.
+
+## General
+
+- Keep changes focused and minimal.
+- Match existing file structure and naming patterns.
+- Do not commit secrets or `.env` files.
