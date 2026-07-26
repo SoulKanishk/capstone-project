@@ -47,13 +47,31 @@ describe('Validator Module Unit Tests', () => {
       assert.strictEqual(err, 'Email address is required.');
     });
 
-    test('rejects whitespace email', () => {
+    test('rejects whitespace-only email', () => {
       const err = validateField('email', '   ');
       assert.strictEqual(err, 'Email address is required.');
     });
 
-    test('rejects invalid email formats', () => {
-      const invalidEmails = ['plainaddress', 'user@', 'user@domain', 'user@.com', 'user@domain..com', '@domain.com'];
+    test('rejects leading whitespace in email', () => {
+      const err = validateField('email', ' user@example.com');
+      assert.strictEqual(err, 'Email address cannot contain leading or trailing whitespace.');
+    });
+
+    test('rejects trailing whitespace in email', () => {
+      const err = validateField('email', 'user@example.com ');
+      assert.strictEqual(err, 'Email address cannot contain leading or trailing whitespace.');
+    });
+
+    test('rejects consecutive dots in email', () => {
+      const consecutiveDotEmails = ['user..name@example.com', 'user@domain..com', 'user@sub..domain.com'];
+      consecutiveDotEmails.forEach(email => {
+        const err = validateField('email', email);
+        assert.strictEqual(err, 'Email address cannot contain consecutive dots.', `Failed for: ${email}`);
+      });
+    });
+
+    test('rejects invalid email formats and disallowed characters', () => {
+      const invalidEmails = ['plainaddress', 'user@', 'user@domain', 'user@.com', '@domain.com', 'user name@domain.com'];
       invalidEmails.forEach(email => {
         const err = validateField('email', email);
         assert.ok(err && err.includes('valid email address'), `Failed for email: ${email}`);
@@ -73,6 +91,16 @@ describe('Validator Module Unit Tests', () => {
     test('rejects empty username', () => {
       const err = validateField('username', '');
       assert.strictEqual(err, 'Username is required.');
+    });
+
+    test('rejects leading whitespace in username', () => {
+      const err = validateField('username', ' janedoe');
+      assert.strictEqual(err, 'Username cannot contain leading or trailing whitespace.');
+    });
+
+    test('rejects trailing whitespace in username', () => {
+      const err = validateField('username', 'janedoe ');
+      assert.strictEqual(err, 'Username cannot contain leading or trailing whitespace.');
     });
 
     test('rejects username with invalid characters (spaces, hyphens, special chars)', () => {
