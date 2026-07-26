@@ -17,3 +17,9 @@
 - Keep changes focused and minimal.
 - Match existing file structure and naming patterns.
 - Do not commit secrets or `.env` files.
+
+## Lessons from FE-05 workflow drill
+
+- All form inputs must have an associated <label>, aria-invalid state, and aria-describedby linking to the error message
+- Any new form/validation logic requires accompanying test files (validator + storage/persistence layers), run via npm test before considering the task done
+- Validation rules must explicitly reject edge cases (leading/trailing whitespace, consecutive dots, disallowed characters) — "looks valid" is not the same as tested valid
